@@ -28,4 +28,11 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
+    css:{
+        loaderOptions: {
+            scss: {
+                additionalData: `@use "@/styles/element-variarbles.scss" as *;`
+            }
+        }
+    }
 })
