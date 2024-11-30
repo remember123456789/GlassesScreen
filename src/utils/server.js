@@ -2,7 +2,7 @@ import axios from "axios";
 import {getStorage} from '@/utils/storage.js'
 
 const request = axios.create({
-    baseURL: 'http://localhost',
+    baseURL: 'http://localhost:3001',
     timeout: 5000
 })
 
@@ -16,9 +16,12 @@ request.interceptors.request.use(config => {
 
 request.interceptors.response.use(response => {
     let {data} = response
-    if (data.code !== 200) {
-        return Promise.reject(data)
-    }
+    // if (data.code !== 200) {
+    //     return Promise.reject(data)
+    // }
+    // if(!data.code){
+    //     return Promise.reject(data)
+    // }
     if (data.code === 401) {
         return Promise.reject(data)
     }

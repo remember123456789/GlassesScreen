@@ -1,13 +1,16 @@
 <script setup>
-import {ElButton, ElForm, ElFormItem, ElInput, ElPageHeader} from "element-plus";
+import {ElButton, ElForm, ElFormItem, ElInput, ElPageHeader, ElMessage} from "element-plus";
 import {ref, reactive} from "vue";
+import {UserLogin, UserRegister} from '@/api/login/index.js'
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 const formRef = ref()
 let UserStatus = ref('Log In')
 // 0为用户登录 1为注册
 let loginstatus = ref(0)
 const rules = reactive({
-  username: [
+  count: [
     {required: true, message: '请输入手机号', trigger: 'blur'},
     {min: 11, max: 11, message: '请输入正确的手机号', trigger: 'blur'}
   ],
@@ -16,16 +19,65 @@ const rules = reactive({
   ]
 })
 let loginForm = reactive({
-  username: '',
+  count: '',
   password: ''
 })
 
 const login = async (formEl) => {
-  console.log(formEl)
   if (!formEl) return;
-  await formEl.validate((valid) => {
+  await formEl.validate(async (valid) => {
     if (valid) {
-      console.log('submit!')
+      if (loginstatus.value === 0) {
+        try {
+          let loginRes = await UserLogin(loginForm)
+          if (loginRes.code === 1) {
+            ElMessage({
+              message: loginRes.msg,
+              type: 'warning',
+              plain: true,
+            })
+          }
+          if (loginRes.code === 0) {
+            ElMessage({
+              message: '登录成功',
+              type: 'success',
+              plain: true,
+            })
+            router.push('/')
+          }
+        } catch (error) {
+          ElMessage({
+            message: error.msg,
+            type: 'error',
+            plain: true,
+          })
+        }
+      } else {
+        try {
+          let registerRes = await UserRegister(loginForm)
+          if (registerRes.code === 0) {
+            ElMessage({
+              message: '注册成功',
+              type: 'success',
+              plain: true,
+            })
+          }
+          if(registerRes.code === 1){
+            ElMessage({
+              message: registerRes.msg,
+              type: 'warning',
+              plain: true,
+            })
+          }
+        } catch (error) {
+          ElMessage({
+            message: error.msg,
+            type: 'error',
+            plain: true,
+          })
+        }
+      }
+
     } else {
       console.log('error submit!')
     }
@@ -61,8 +113,8 @@ const goBack = (formEl) => {
                      label-width="auto"
                      :rules="rules"
                      class="demo-dynamic">
-              <el-form-item prop="username" label="账号">
-                <el-input v-model="loginForm.username" placeholder="User Name"/>
+              <el-form-item prop="count" label="账号">
+                <el-input v-model="loginForm.count" placeholder="User Name"/>
               </el-form-item>
               <el-form-item prop="password" label="密码">
                 <el-input v-model="loginForm.password" placeholder="User Password"/>
@@ -72,7 +124,7 @@ const goBack = (formEl) => {
               </el-form-item>
             </el-form>
             <p class="account" v-if="loginstatus===0">Don't have an account? <a style="cursor: pointer"
-                @click="register(formRef)">Register</a>
+                                                                                @click="register(formRef)">Register</a>
             </p>
             <p class="account" v-else>
               <el-page-header @back="goBack(formRef)">
@@ -166,6 +218,7 @@ button:hover {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
+
 .w3l-hotair-form .main-hotair {
   position: relative;
   display: -webkit-box;
