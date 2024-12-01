@@ -1,6 +1,6 @@
 <script setup>
 import {ElButton, ElForm, ElFormItem, ElInput, ElPageHeader, ElMessage} from "element-plus";
-import {ref, reactive} from "vue";
+import {ref, reactive, onMounted} from "vue";
 import {UserLogin, UserRegister} from '@/api/login/index.js'
 import {useRouter} from "vue-router";
 
@@ -22,7 +22,7 @@ let loginForm = reactive({
   count: '',
   password: ''
 })
-
+//登录与注册
 const login = async (formEl) => {
   if (!formEl) return;
   await formEl.validate(async (valid) => {
@@ -43,7 +43,7 @@ const login = async (formEl) => {
               type: 'success',
               plain: true,
             })
-            router.push('/')
+            router.push('/main')
           }
         } catch (error) {
           ElMessage({
@@ -62,7 +62,7 @@ const login = async (formEl) => {
               plain: true,
             })
           }
-          if(registerRes.code === 1){
+          if (registerRes.code === 1) {
             ElMessage({
               message: registerRes.msg,
               type: 'warning',
@@ -83,13 +83,20 @@ const login = async (formEl) => {
     }
   })
 }
-
+//切换到注册
 const register = (formEl) => {
-  // console.log('register')
   UserStatus.value = 'Register'
   loginstatus.value = 1
   formEl.resetFields()
 }
+
+onMounted(() => {
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      login(formRef.value)
+    }
+  })
+})
 
 const goBack = (formEl) => {
   UserStatus.value = 'Log In'
@@ -117,7 +124,7 @@ const goBack = (formEl) => {
                 <el-input v-model="loginForm.count" placeholder="User Name"/>
               </el-form-item>
               <el-form-item prop="password" label="密码">
-                <el-input v-model="loginForm.password" placeholder="User Password"/>
+                <el-input v-model="loginForm.password" type="password" placeholder="User Password"/>
               </el-form-item>
               <el-form-item>
                 <el-button size="large" class="btn" @click="login(formRef)">{{ UserStatus }}</el-button>
