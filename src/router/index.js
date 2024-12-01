@@ -27,7 +27,6 @@ const router = createRouter({
                     name: 'dataImport',
                     component: () => import('@/views/DataImport/dataimport.vue'),
                 }
-
             ]
         }
     ],
