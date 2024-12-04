@@ -21,27 +21,28 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes rotation-back {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(-360deg);
-  }
-}
+//@keyframes rotation {
+//  0% {
+//    transform: rotate(0deg);
+//  }
+//
+//  100% {
+//    transform: rotate(360deg);
+//  }
+//}
+//
+//@keyframes rotation-back {
+//  0% {
+//    transform: rotate(0deg);
+//  }
+//
+//  100% {
+//    transform: rotate(-360deg);
+//  }
+//}
 
 .module-item {
+  width: 100%;
   position: relative;
   z-index: 3;
   height: 100%;

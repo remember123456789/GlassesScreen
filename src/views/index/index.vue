@@ -24,44 +24,38 @@ onMounted(() => {
   <header>
     <ElButton @click="bigScreen">全屏</ElButton>
   </header>
-  <div ref="screen" style="background-color: var(--bg-color-a)">
+  <div ref="screen" class="screen-container" style="background-color: var(--bg-color-a)">
     <header class="offic-header">
-      <div class="col-sm-12 col-md-12 pd  title-info">眼镜销量可视化大屏</div>
+      <div class="pd title-info">眼镜销量可视化大屏</div>
     </header>
-    <el-row :gutter="15" class="chart-content-row">
-      <el-col class="chart-content-col" :span="4">
+    <el-row class="chart-content-row" :span="24">
+      <el-col :span="6" class="chart-content-col">
         <el-row class="chart-content-left">
-          <el-col class="chart-content-left-item">
+          <el-col :span="12" class="chart-content-left-item">
             <ModuleItem title="左上">
+              <div :ref="ChartEcharts1.chartRef" style="width: 100%;height: 100%"></div>
             </ModuleItem>
           </el-col>
-          <el-col class="chart-content-left-item">
+          <el-col :span="12" class="chart-content-left-item">
             <ModuleItem title="左下">
+              <div :ref="ChartEcharts1.chartRef" style="width: 100%;height: 100%"></div>
             </ModuleItem>
           </el-col>
         </el-row>
       </el-col>
-      <!--      中间-->
-      <el-col class="chart-content-col" :span="14">
+      <el-col :span="12" class="chart-content-col">
         <ModuleItem title="中间">
-          <div :ref="ChartEcharts1.chartRef" style="width: 100%; height: 500px;"></div>
+          <!--          <div ref="ChartEcharts1ChartRef"></div>-->
         </ModuleItem>
-
       </el-col>
-      <el-col class="chart-content-col" :span="6">
+      <el-col :span="6" class="chart-content-col">
         <el-row class="chart-content-right">
-          <el-col class="chart-content-right-item">
-            <ModuleItem title="右上">
-              和
-            </ModuleItem>
+          <el-col :span="12" class="chart-content-right-item">
+            <ModuleItem title="右上">和</ModuleItem>
           </el-col>
-          <el-col class="chart-content-right-item">
-            <ModuleItem title="右下">
-              和
-            </ModuleItem>
-
+          <el-col :span="12" class="chart-content-right-item">
+            <ModuleItem title="右下">和</ModuleItem>
           </el-col>
-
         </el-row>
       </el-col>
     </el-row>
@@ -69,6 +63,46 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.el-col-12 {
+  max-width: 100% !important;
+}
+
+.screen-container {
+  width: 100%;
+  height: 100%; /* 使容器高度充满视口 */
+  //display: flex;
+  //flex-direction: column;
+}
+
+.chart-content-row {
+  width: 100%;
+  flex: 1; /* 使行占据剩余空间 */
+  display: flex;
+  flex-wrap: wrap; /* 允许子元素换行 */
+}
+
+.chart-content-col {
+  height: 100%;
+}
+
+.chart-content-left, .chart-content-right {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* 使子列占据剩余空间 */
+}
+
+.chart-content-left-item, .chart-content-right-item {
+  width: 100%;
+  flex: 1; /* 使每个项占据相等空间 */
+  margin-bottom: 10px; /* 可根据需要调整 */
+}
+
+/* 媒体查询示例 */
+@media (max-width: 768px) {
+
+}
+
 .office-efficiency-index {
   font-family: PingFangSC-Semibold, PingFang SC;
   background-color: #22284A;
@@ -82,6 +116,9 @@ onMounted(() => {
 
 .chart-content-left {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .offic-header .title-info {
@@ -107,108 +144,5 @@ onMounted(() => {
 //  background: url("@/assets/images/office_efficiency_header_bg.png") no-repeat center center;
 //  background-size: 100% 100%;
 //}
-.chart-content-left {
-}
-
-.chart-content-right {
-  width: auto;
-}
-
-.chart-content {
-  height: calc(100% - 77px);
-  margin-top: 12px;
-
-  .chart-content-row,
-  .chart-content-col {
-    height: 100%;
-    //display: block;
-    //width: 100%;
-    display: flex;
-  }
-
-  .chart-container {
-    width: 100%;
-    height: 100%;
-  }
-
-  .virtual-list-content {
-    display: flex;
-    flex-direction: column;
-    height: 98%;
-    padding: 0 8px;
-
-    .virtual-list-item {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      padding: 4px;
-      color: rgb(255 255 255);
-      cursor: pointer;
-
-      &:hover {
-        color: #68d8ff;
-        background: rgb(255 255 255 / 10%);
-      }
-
-      &-col {
-        width: 16%;
-        overflow: hidden;
-        text-align: center;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      &-col:nth-child(1) {
-        width: 19.5%;
-        text-align: left;
-      }
-    }
-  }
-
-  &-left {
-    flex-direction: column;
-    row-gap: 8px !important;
-    height: 100%;
-
-    &-item:nth-child(1) {
-      flex: 2;
-    }
-
-    &-item:nth-child(2) {
-      flex: 1;
-    }
-  }
-
-  &-center {
-    flex-direction: column;
-    row-gap: 8px !important;
-    height: 100%;
-
-    &-item:nth-child(1) {
-      flex: 2;
-
-      .index-data {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        margin: 0 16px;
-      }
-    }
-
-    &-item:nth-child(2) {
-      flex: 1;
-    }
-  }
-
-  &-right {
-    flex-direction: column;
-    row-gap: 8px !important;
-    height: 100%;
-
-    &-item {
-      flex: 1;
-    }
-  }
-}
 
 </style>
