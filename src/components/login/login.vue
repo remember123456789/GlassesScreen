@@ -43,7 +43,7 @@ const login = async (formEl) => {
               type: 'success',
               plain: true,
             })
-            router.push('/main')
+            router.push('/main/home')
           }
         } catch (error) {
           ElMessage({

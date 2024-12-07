@@ -1,4 +1,4 @@
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import * as echarts from 'echarts'
 
 export default function () {
@@ -30,12 +30,14 @@ export default function () {
     }
 
     const resizeChart = () => {
-        if (chartRef.value) {
-            window.addEventListener('resize', function () {
-                chartRef.value.resize()
-            })
-        }
+        chartRef.value && chartRef.value.resize({
+            width: chartRef.value.offsetWidth
+
+        })
     }
+    // onMounted(() => {
+    //     chartRef.value && initChart()
+    // })
 
     return {
         chartRef,

@@ -38,19 +38,19 @@ const handleClose = (key, keyPath) => {
               @select="handleOpen"
               style="height: 100%;"
           >
-            <h1>123</h1>
+            <h1>眼镜销量可视化大屏</h1>
             <el-menu-item index="0">
               <el-icon>
                 <document/>
               </el-icon>
               <span>首页大屏</span>
             </el-menu-item>
-            <el-menu-item index="1">
-              <el-icon>
-                <setting/>
-              </el-icon>
-              <span>数据导入</span>
-            </el-menu-item>
+<!--            <el-menu-item index="1">-->
+<!--              <el-icon>-->
+<!--                <setting/>-->
+<!--              </el-icon>-->
+<!--              <span>数据导入</span>-->
+<!--            </el-menu-item>-->
           </el-menu>
         </div>
       </el-aside>

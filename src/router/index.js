@@ -22,11 +22,11 @@ const router = createRouter({
                     name: 'home',
                     component: () => import('@/views/index/index.vue'),
                 },
-                {
-                    path: '/main/dataImport',
-                    name: 'dataImport',
-                    component: () => import('@/views/DataImport/dataimport.vue'),
-                }
+                // {
+                //     path: '/main/dataImport',
+                //     name: 'dataImport',
+                //     component: () => import('@/views/DataImport/dataimport.vue'),
+                // }
             ]
         }
     ],
